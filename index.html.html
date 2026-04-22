@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일반협동조합 사업재개 절차 체크리스트</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#1a1a18;padding:1.5rem}
+.wrap{max-width:720px;margin:0 auto}
+h1{font-size:20px;font-weight:500;margin-bottom:4px;color:#1a1a18}
+.subtitle{font-size:13px;color:#5f5e5a;margin-bottom:1.5rem}
+.phase{margin-bottom:1.25rem;border:0.5px solid #d6d4cb;border-radius:12px;overflow:hidden;background:#fff}
+.phase-header{padding:0.75rem 1rem;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;background:#fff}
+.phase-header:hover{background:#f8f7f4}
+.phase-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.phase-title{font-size:15px;font-weight:500;color:#1a1a18;flex:1}
+.phase-badge{font-size:12px;padding:3px 10px;border-radius:8px;white-space:nowrap}
+.phase-cost{font-size:13px;color:#888780;margin-right:4px;white-space:nowrap}
+.phase-arrow{font-size:12px;color:#888780;transition:transform 0.2s;display:inline-block;flex-shrink:0}
+.phase-arrow.open{transform:rotate(180deg)}
+.phase-body{border-top:0.5px solid #d6d4cb;display:none}
+.phase-body.open{display:block}
+.agency-box{background:#f8f7f4;border-bottom:0.5px solid #d6d4cb;padding:0.75rem 1rem;display:flex;flex-wrap:wrap;gap:16px}
+.agency-item{display:flex;flex-direction:column;gap:2px;min-width:150px}
+.agency-label{font-size:11px;color:#888780;font-weight:500;margin-bottom:1px}
+.agency-name{font-size:13px;font-weight:500;color:#1a1a18}
+.agency-detail{font-size:12px;color:#5f5e5a;line-height:1.5}
+.agency-link{font-size:12px;color:#185FA5;text-decoration:none}
+.agency-link:hover{text-decoration:underline}
+.task{display:flex;align-items:flex-start;gap:10px;padding:0.65rem 1rem;border-bottom:0.5px solid #d6d4cb}
+.task:last-child{border-bottom:none}
+.cb{width:18px;height:18px;border:1.5px solid #b4b2a9;border-radius:4px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:background 0.15s,border-color 0.15s}
+.cb.checked{background:#d4edda;border-color:#5a9a6a}
+.cb.checked::after{content:'';display:block;width:5px;height:9px;border:2px solid #2d6a3f;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px)}
+.task-main{flex:1}
+.task-label{font-size:14px;color:#1a1a18;line-height:1.5}
+.task-label.done{text-decoration:line-through;color:#b4b2a9}
+.task-note{font-size:12px;color:#5f5e5a;margin-top:3px;line-height:1.5}
+.task-cost{font-size:12px;padding:2px 8px;border-radius:8px;white-space:nowrap;margin-top:4px;display:inline-block}
+.summary-bar{background:#f1efe8;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat-label{font-size:12px;color:#5f5e5a}
+.stat-value{font-size:18px;font-weight:500;color:#1a1a18}
+.divider{width:1px;height:36px;background:#d6d4cb}
+.progress-bar{flex:1;min-width:120px}
+.progress-track{height:6px;background:#d6d4cb;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:#5a9a6a;border-radius:3px;transition:width 0.3s}
+.phase-p1 .phase-num{background:#E6F1FB;color:#185FA5}
+.phase-p2 .phase-num{background:#EEEDFE;color:#534AB7}
+.phase-p3 .phase-num{background:#E1F5EE;color:#0F6E56}
+.phase-p4 .phase-num{background:#FAEEDA;color:#854F0B}
+.phase-p5 .phase-num{background:#FCEBEB;color:#A32D2D}
+.badge-blue{background:#E6F1FB;color:#185FA5}
+.badge-purple{background:#EEEDFE;color:#534AB7}
+.badge-teal{background:#E1F5EE;color:#0F6E56}
+.badge-amber{background:#FAEEDA;color:#854F0B}
+.badge-red{background:#FCEBEB;color:#A32D2D}
+.cost-free{background:#EAF3DE;color:#3B6D11}
+.cost-low{background:#FAEEDA;color:#854F0B}
+.cost-mid{background:#FCEBEB;color:#A32D2D}
+.tip{font-size:12px;background:#E6F1FB;color:#185FA5;border-radius:8px;padding:6px 10px;margin-top:5px;line-height:1.5}
+.cost-table{background:#f1efe8;border-radius:12px;padding:1rem 1.25rem;margin-top:0.5rem}
+.cost-table-title{font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:10px}
+.cost-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;padding:3px 0}
+.cost-row.total{border-top:0.5px solid #d6d4cb;padding-top:8px;margin-top:4px;font-weight:500;font-size:14px}
+.cost-label{color:#5f5e5a}
+.cost-value{text-align:right;color:#1a1a18}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>일반협동조합 사업재개 절차 체크리스트</h1>
+<p class="subtitle">법인등기 유지 | 임원 변경 포함 | 마포구 기준</p>
+
+<div class="summary-bar">
+  <div class="stat"><span class="stat-label">완료 항목</span><span class="stat-value" id="done-count">0 / 21</span></div>
+  <div class="divider"></div>
+  <div class="stat"><span class="stat-label">예상 최소 비용</span><span class="stat-value">약 20만원</span></div>
+  <div class="divider"></div>
+  <div class="stat"><span class="stat-label">세무사 위임 시</span><span class="stat-value">약 55만원</span></div>
+  <div class="divider"></div>
+  <div class="progress-bar">
+    <div style="font-size:12px;color:#5f5e5a;margin-bottom:4px" id="pct-label">진행률 0%</div>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- STEP 1 -->
+<div class="phase phase-p1" id="ph1">
+  <div class="phase-header" onclick="toggle('ph1')">
+    <div class="phase-num">1</div>
+    <div class="phase-title">현황 파악</div>
+    <span class="phase-badge badge-blue">사전 준비</span>
+    <span class="phase-cost">비용 없음</span>
+    <span class="phase-arrow open" id="arr-ph1">▼</span>
+  </div>
+  <div class="phase-body open" id="body-ph1">
+    <div class="agency-box">
+      <div class="agency-item">
+        <span class="agency-label">법인등기 확인</span>
+        <span class="agency-name">인터넷등기소</span>
+        <a class="agency-link" href="https://www.iros.go.kr" target="_blank">iros.go.kr →</a>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">사업자등록 확인</span>
+        <span class="agency-name">국세청 홈택스</span>
+        <a class="agency-link" href="https://www.hometax.go.kr" target="_blank">hometax.go.kr →</a>
+        <span class="agency-detail">또는 마포세무서 02-705-7200</span>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">절차 상담</span>
+        <span class="agency-name">마포구사회적경제통합지원센터</span>
+        <span class="agency-detail">02-303-5284</span>
+        <span class="agency-detail">maposehub@daum.net</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">법인등기부등본 열람 — 임원 임기·해산간주 여부 확인</div>
+        <div class="task-note">인터넷등기소(iros.go.kr) → 법인 검색 → 등기사항전부증명서 발급 (로그인 불필요)</div>
+        <span class="task-cost cost-low">700원 (열람) / 1,000원 (발급)</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">사업자등록 상태 확인 — 살아있는지 / 직권폐업 여부</div>
+        <div class="task-note">홈택스 → 조회/발급 → 사업자상태조회. 또는 마포세무서(02-705-7200) 전화 문의</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">밀린 법인세 신고 누락 연도 확인</div>
+        <div class="task-note">홈택스 → 신고/납부 이력 조회. 또는 마포세무서 방문 상담 (126 콜센터 전화 먼저 활용 가능)</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="phase phase-p2" id="ph2">
+  <div class="phase-header" onclick="toggle('ph2')">
+    <div class="phase-num">2</div>
+    <div class="phase-title">총회 개최 — 임원 선출 및 사업재개 의결</div>
+    <span class="phase-badge badge-purple">핵심 절차</span>
+    <span class="phase-cost">비용 없음</span>
+    <span class="phase-arrow" id="arr-ph2">▼</span>
+  </div>
+  <div class="phase-body" id="body-ph2">
+    <div class="agency-box">
+      <div class="agency-item">
+        <span class="agency-label">총회 운영 문의</span>
+        <span class="agency-name">마포구사회적경제통합지원센터</span>
+        <span class="agency-detail">02-303-5284</span>
+        <span class="agency-detail">maposehub@daum.net</span>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">협동조합 전문 상담 (서울)</span>
+        <span class="agency-name">서울시 협동조합 지원센터</span>
+        <span class="agency-detail">☎ 1544-5077</span>
+        <a class="agency-link" href="https://sehub.net" target="_blank">sehub.net →</a>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">협동조합 상담 및 서식 (전국)</span>
+        <span class="agency-name">전국협동조합상담센터</span>
+        <a class="agency-link" href="https://16602165.net" target="_blank">16602165.net →</a>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">총회 소집 통지 — 개최 7일 전까지 전 조합원에게 안건·일시·장소 통보</div>
+        <div class="task-note">문자, 이메일 등 정관에서 정한 방법 사용. 통지 증빙 보관 필수</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">임시총회 개최 — 조합원 과반수 출석, 출석 조합원 과반수 찬성</div>
+        <div class="task-note">임원 선출은 정관에 따라 총회 또는 이사회에서 진행</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">안건 1 — 신임 이사장·이사·감사 선출</div>
+        <div class="task-note">이사장 1명 + 이사 2명 이상 + 감사 1명 이상 선출 (정관 확인)</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">안건 2 — 사업재개 및 사업계획서·예산서 승인</div>
+        <div class="task-note">어떤 사업을, 언제부터 재개할지 구체적으로 의결</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">총회 의사록 작성 — 의장 + 조합원 3인 이상 기명날인</div>
+        <div class="task-note">개최 일시·장소, 참석자, 안건, 의결 결과 모두 포함. 나중에 공증용으로도 사용됨</div>
+        <div class="tip">의사록은 변경신고·등기의 핵심 서류. 꼼꼼하게 작성해야 나중에 번거롭지 않음</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="phase phase-p3" id="ph3">
+  <div class="phase-header" onclick="toggle('ph3')">
+    <div class="phase-num">3</div>
+    <div class="phase-title">변경신고 — 관할 자치구청</div>
+    <span class="phase-badge badge-teal">행정 신고</span>
+    <span class="phase-cost">무료</span>
+    <span class="phase-arrow" id="arr-ph3">▼</span>
+  </div>
+  <div class="phase-body" id="body-ph3">
+    <div class="agency-box">
+      <div class="agency-item">
+        <span class="agency-label">서류 제출처 (마포구)</span>
+        <span class="agency-name">마포구청 고용협력과</span>
+        <span class="agency-detail">02-3153-8555 (협동조합 담당)</span>
+        <span class="agency-detail">서울 마포구 월드컵로 212</span>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">서식 다운로드</span>
+        <span class="agency-name">전국협동조합상담센터 행정서식</span>
+        <a class="agency-link" href="https://16602165.net/boards/form" target="_blank">16602165.net/boards/form →</a>
+        <span class="agency-detail">별지 제7호 서식 (1\_협동조합 분류)</span>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">서류 작성 도움</span>
+        <span class="agency-name">마포구사회적경제통합지원센터</span>
+        <span class="agency-detail">02-303-5284</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">변경신고서 작성 — 임원 변경 사항 기재</div>
+        <div class="task-note">협동조합 기본법 시행규칙 별지 제7호 서식. coop.go.kr 또는 마포구청 홈페이지에서 다운로드</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">제출 서류 준비 및 신고 — 마포구청 고용협력과 방문 또는 우편</div>
+        <div class="task-note">① 변경신고서 ② 총회 의사록 사본(원본대조필) ③ 변경된 임원명부 ④ 설립신고확인증(이사장 변경 시)</div>
+        <div class="tip">서울은 시도지사 권한이 자치구청장에게 위임됨. 주사무소 소재지 관할 구청에 신고. 중요사항(임원 변경 등)은 변경일로부터 14일 이내 신고</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">변경신고확인증 수령 — 신고일로부터 약 10일 이내</div>
+        <div class="task-note">이사장 변경 시 새로운 설립신고확인증 재발급 요청. 이후 변경등기에 필요</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="phase phase-p4" id="ph4">
+  <div class="phase-header" onclick="toggle('ph4')">
+    <div class="phase-num">4</div>
+    <div class="phase-title">변경등기 — 관할 등기소</div>
+    <span class="phase-badge badge-amber">등기 필수</span>
+    <span class="phase-cost">약 10~15만원</span>
+    <span class="phase-arrow" id="arr-ph4">▼</span>
+  </div>
+  <div class="phase-body" id="body-ph4">
+    <div class="agency-box">
+      <div class="agency-item">
+        <span class="agency-label">공증 (의사록)</span>
+        <span class="agency-name">인근 공증사무소</span>
+        <span class="agency-detail">공증사무소 검색:</span>
+        <a class="agency-link" href="https://www.law.go.kr" target="_blank">법제처 법령정보센터 →</a>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">등록면허세 납부</span>
+        <span class="agency-name">위택스 (온라인)</span>
+        <a class="agency-link" href="https://www.wetax.go.kr" target="_blank">wetax.go.kr →</a>
+        <span class="agency-detail">문의: 마포구청 고용협력과</span>
+        <span class="agency-detail">02-3153-8555</span>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">등기 신청</span>
+        <span class="agency-name">서울서부지방법원 등기과</span>
+        <span class="agency-detail">02-3271-1114</span>
+        <span class="agency-detail">서울 마포구 신수로 56</span>
+        <a class="agency-link" href="https://www.iros.go.kr" target="_blank">인터넷등기소 →</a>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">총회 의사록 공증 — 공증사무소 방문</div>
+        <div class="task-note">등기용 의사록은 공증 필수. 인감증명서(3개월 이내) + 법인인감도장 지참. 인근 공증사무소 방문 (법제처 법령정보센터 또는 검색 포털에서 '공증사무소' 검색)</div>
+        <span class="task-cost cost-mid">5~10만원</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">등록면허세 납부 — 위택스(wetax.go.kr) 온라인 납부</div>
+        <div class="task-note">등록면허세 약 40,200원 + 지방교육세 약 8,040원. 위택스(wetax.go.kr)에서 온라인 납부. 문의: 마포구청 고용협력과 02-3153-8555</div>
+        <span class="task-cost cost-low">약 48,000원</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">등기신청 수수료 납부</div>
+        <div class="task-note">등기소 내 무인발급기 또는 인터넷등기소(iros.go.kr)에서 납부</div>
+        <span class="task-cost cost-free">6,000원</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">변경등기 신청 — 서울서부지방법원 등기과 방문</div>
+        <div class="task-note">공증 의사록 + 취임승낙서 + 인감증명서 + 주민등록등본 + 설립신고확인증 + 등록면허세 납부확인증 지참. 변경 사유 발생일로부터 21일 이내</div>
+        <div class="tip">방문 전 02-3271-1114로 전화해 필요 서류 재확인 권장. 등기소마다 요구 서류가 다를 수 있음</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="phase phase-p5" id="ph5">
+  <div class="phase-header" onclick="toggle('ph5')">
+    <div class="phase-num">5</div>
+    <div class="phase-title">세무 처리 — 세무서</div>
+    <span class="phase-badge badge-red">세금 정리</span>
+    <span class="phase-cost">약 10~40만원</span>
+    <span class="phase-arrow" id="arr-ph5">▼</span>
+  </div>
+  <div class="phase-body" id="body-ph5">
+    <div class="agency-box">
+      <div class="agency-item">
+        <span class="agency-label">세금 신고 및 방문 상담</span>
+        <span class="agency-name">마포세무서</span>
+        <span class="agency-detail">02-705-7200</span>
+        <span class="agency-detail">서울 마포구 마포대로 133</span>
+        <a class="agency-link" href="https://s.nts.go.kr/mapo/main.do" target="_blank">마포세무서 홈페이지 →</a>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">온라인 신고</span>
+        <span class="agency-name">국세청 홈택스</span>
+        <a class="agency-link" href="https://www.hometax.go.kr" target="_blank">hometax.go.kr →</a>
+      </div>
+      <div class="agency-item">
+        <span class="agency-label">세무 무료 상담</span>
+        <span class="agency-name">국세청 세미래 콜센터</span>
+        <span class="agency-detail">☎ 126 (국번 없이)</span>
+        <span class="agency-detail">평일 9:00~18:00</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">사업자등록 상태 재확인 후 처리</div>
+        <div class="task-note">살아있으면 → 그대로 재개 / 직권폐업이면 → 마포세무서(02-705-7200) 방문 또는 홈택스로 사업자등록 재신청 (사업개시일로부터 20일 이내)</div>
+        <span class="task-cost cost-free">재신청 무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">밀린 법인세 무실적 신고 일괄 제출</div>
+        <div class="task-note">홈택스에서 직접 신고 가능. 무실적이면 납부 세액 0원, 가산세만 발생 (연도당 약 2만원). 어렵다면 126 상담 먼저 활용</div>
+        <span class="task-cost cost-low">가산세 10~14만원 (5~7년 기준)</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">마포세무서 방문 상담 — 누락 항목 전체 확인</div>
+        <div class="task-note">"오랫동안 무활동이었는데 재개하려 한다"고 솔직하게 설명하면 일괄 처리 방법 안내해줌</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">(선택) 세무사 위임 — 밀린 신고 일괄 처리</div>
+        <div class="task-note">직접 처리가 어려울 경우. 무실적 법인 일괄 신고는 구조가 단순해 수임료 협상 여지 있음</div>
+        <span class="task-cost cost-mid">20~40만원</span>
+      </div>
+    </div>
+    <div class="task">
+      <div class="cb" onclick="check(this)"></div>
+      <div class="task-main">
+        <div class="task-label">사업자등록증 정보 정정 — 이사장 변경 시</div>
+        <div class="task-note">변경등기 완료 후 마포세무서 방문 또는 홈택스 온라인으로 사업자등록증 정정 신청</div>
+        <span class="task-cost cost-free">무료</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cost-table">
+  <div class="cost-table-title">예상 비용 요약</div>
+  <div class="cost-row"><span class="cost-label">등기부등본 발급</span><span class="cost-value">약 1,000원</span></div>
+  <div class="cost-row"><span class="cost-label">등록면허세 + 지방교육세</span><span class="cost-value">약 48,000원</span></div>
+  <div class="cost-row"><span class="cost-label">등기신청 수수료</span><span class="cost-value">6,000원</span></div>
+  <div class="cost-row"><span class="cost-label">공증 비용</span><span class="cost-value">5~10만원</span></div>
+  <div class="cost-row"><span class="cost-label">법인세 무신고 가산세</span><span class="cost-value">10~14만원</span></div>
+  <div class="cost-row total"><span class="cost-label">직접 처리 시 합계</span><span class="cost-value">약 20~25만원</span></div>
+  <div class="cost-row"><span class="cost-label">+ 세무사 위임 시 추가</span><span class="cost-value">+ 20~40만원</span></div>
+  <div class="cost-row total"><span class="cost-label">세무사 위임 시 합계</span><span class="cost-value">약 40~65만원</span></div>
+</div>
+
+</div>
+<script>
+var total=21;
+function check(cb){
+  cb.classList.toggle('checked');
+  var label=cb.parentElement.querySelector('.task-label');
+  label.classList.toggle('done');
+  var done=document.querySelectorAll('.cb.checked').length;
+  document.getElementById('done-count').textContent=done+' / '+total;
+  var pct=Math.round(done/total*100);
+  document.getElementById('pct-label').textContent='진행률 '+pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+}
+function toggle(id){
+  var body=document.getElementById('body-'+id);
+  var arr=document.getElementById('arr-'+id);
+  body.classList.toggle('open');
+  arr.classList.toggle('open');
+}
+</script>
+</body>
+</html>
